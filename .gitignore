@@ -1,0 +1,28 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# R / renv
+renv/library/
+renv/staging/
+
+# Secrets
+.Renviron
+.env
+
+# Data files
+*.duckdb
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+data/

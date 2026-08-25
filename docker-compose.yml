@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: sandbox_postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-sandbox_dev}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: sandbox_clickhouse
+    environment:
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB:-sandbox_dev}
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-default}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhouse}
+    ports:
+      - "${CLICKHOUSE_HTTP_PORT:-8123}:8123"
+      - "${CLICKHOUSE_TCP_PORT:-9000}:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  clickhouse_data:
