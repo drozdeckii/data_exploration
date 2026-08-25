@@ -1,4 +1,4 @@
-from sandbox.db import get_connection
+from dataexpo.db import get_connection
 
 
 def main() -> None:

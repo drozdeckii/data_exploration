@@ -45,13 +45,18 @@ template:
 
 4. **Re-provision the environment**:
    ```sh
-   docker compose up -d
-   uv sync
    cp .env.example .env
+   cp .env.example .Renviron   # R reads .Renviron, not .env -- both need it
+   uv sync
    ```
-   If port `5432` (or `8123`/`9000`) is already taken on your machine, change
-   `DB_PORT` (or the `CLICKHOUSE_*_PORT` vars) in `.env` before starting the
-   containers.
+   If port `5432` (or `8123`/`9000`) is already taken on your machine — e.g. by
+   a native Postgres install — edit `DB_PORT` (or the `CLICKHOUSE_*_PORT`
+   vars) in **both** `.env` and `.Renviron` now, **before** starting the
+   containers, otherwise the first `docker compose up -d` will fail with a
+   port-binding error.
+   ```sh
+   docker compose up -d
+   ```
    ```sh
    uv run sandbox                                   # check the Postgres connection
    uv run python scripts/python/clickhouse_check.py # check the ClickHouse connection
@@ -60,6 +65,9 @@ template:
    ```r
    renv::restore()
    ```
+   `.Renviron` is only loaded when an R session starts, so if you already had
+   one open, restart it (or run `readRenviron(".Renviron")`) before
+   `scripts/r/db_check.R`.
 
 ## Stack
 

@@ -3,8 +3,8 @@
 import numpy as np
 import pandas as pd
 
-from sandbox.clickhouse import get_client
-from sandbox.db import get_engine
+from dataexpo.clickhouse import get_client
+from dataexpo.db import get_engine
 
 RNG = np.random.default_rng(42)
 N_USERS = 2_000
