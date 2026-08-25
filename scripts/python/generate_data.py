@@ -56,8 +56,8 @@ def generate_events(users: pd.DataFrame) -> pd.DataFrame:
 
 def load_postgres(users: pd.DataFrame, events: pd.DataFrame) -> None:
     engine = get_engine()
-    users.to_sql("users", engine, if_exists="replace", index=False)
-    events.to_sql("events", engine, if_exists="replace", index=False)
+    users.to_sql("users", engine, if_exists="replace", index=False, method="multi", chunksize=1000)
+    events.to_sql("events", engine, if_exists="replace", index=False, method="multi", chunksize=1000)
     print(f"Postgres: loaded {len(users)} users, {len(events)} events")
 
 
